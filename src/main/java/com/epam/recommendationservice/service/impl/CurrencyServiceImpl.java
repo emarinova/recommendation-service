@@ -43,6 +43,12 @@ public class CurrencyServiceImpl implements CurrencyService {
     }
 
 
+    /**
+     * Loads all supported currency from CurrencyRepository
+     * For every currency calculates normalized range and puts it in a map
+     * Sorts the Map with currency - normalized range by value in reverse order
+     * @return sorted by descending Map currency - normalized range
+     */
     @Override
     public Map<String, Double> getAllNormalizedRangeValuesSorted() {
         Map<String, Double> normalizedRangeValues = new HashMap<>();
@@ -64,6 +70,12 @@ public class CurrencyServiceImpl implements CurrencyService {
 
     }
 
+    /**
+     * Checks if currency is supported & if there are records for it
+     * Finds min/max/oldest/newest CurrencyRecords
+     * @param currency
+     * @return CurrencyStatistics object containing min/max/oldest/newest records
+     */
     @Override
     public CurrencyStatistics getCurrencyStatistics(String currency) {
         Map<String, String> supportedCurrencies = this.repository.getAllSupportedCurrencies();
@@ -98,6 +110,12 @@ public class CurrencyServiceImpl implements CurrencyService {
         return new CurrencyStatistics(minPrice, maxPrice, oldestRecord, newestRecord);
     }
 
+    /**
+     * Checks if date is correct and could be parsed
+     * For all supported currencies finds all records for this date and calculates normalized range
+     * @param stringDate
+     * @return Currency with highest normalized range for date
+     */
     @Override
     public Map.Entry<String, Double> getHighestNormalizedRangeForDay(String stringDate) {
         Date date;

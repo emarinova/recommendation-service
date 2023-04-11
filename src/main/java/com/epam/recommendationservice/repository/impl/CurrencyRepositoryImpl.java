@@ -38,7 +38,10 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
         this.folder = folder;
     }
 
-
+    /**
+     * Gets all files in predefined directory and creates a map with currency as key and file path as value
+     * @return Map of currency - file path with records
+     */
     @Override
     public Map<String, String> getAllSupportedCurrencies() {
         Map<String, String> allSupportedCurrencies = new HashMap<>();
@@ -51,6 +54,11 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
         return allSupportedCurrencies;
     }
 
+    /**
+     * Reads file and maps its rows to CurrencyRecord objects
+     * @param filePath
+     * @return List of CurrencyRecord objects
+     */
     @Override
     public List<CurrencyRecord> getCurrencyRecords(String filePath) {
         try {
