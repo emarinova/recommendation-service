@@ -9,7 +9,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.server.ResponseStatusException;
@@ -26,23 +25,23 @@ import static org.junit.Assert.assertEquals;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class CurrencyRepositoryImplTest {
 
-    private static final String FILE_PATH = "prices/BTC_values.csv";
+    private static final String FILE_PATH = "src/main/resources/prices/BTC_values.csv";
 
     private CurrencyRepository repository;
 
     @Before
     public void setup() {
-        this.repository = new CurrencyRepositoryImpl("src/main/resources/prices/", "prices/");
+        this.repository = new CurrencyRepositoryImpl("src/main/resources/prices/");
     }
 
     @Test
     public void getAllSupportedCurrenciesTest() {
         Map<String, String> expected = new HashMap<>() {{
-            put("BTC", "prices/BTC_values.csv");
-            put("DOGE", "prices/DOGE_values.csv");
-            put("ETH", "prices/ETH_values.csv");
-            put("LTC", "prices/LTC_values.csv");
-            put("XRP", "prices/XRP_values.csv");
+            put("BTC", "src/main/resources/prices/BTC_values.csv");
+            put("DOGE", "src/main/resources/prices/DOGE_values.csv");
+            put("ETH", "src/main/resources/prices/ETH_values.csv");
+            put("LTC", "src/main/resources/prices/LTC_values.csv");
+            put("XRP", "src/main/resources/prices/XRP_values.csv");
         }};
         Map<String, String> actual = this.repository.getAllSupportedCurrencies();
         assertEquals(expected, actual);
@@ -52,7 +51,7 @@ public class CurrencyRepositoryImplTest {
     public void getCurrencyRecordsTest() throws IOException {
         CsvSchema bootstrapSchema = CsvSchema.emptySchema().withHeader();
         CsvMapper mapper = new CsvMapper();
-        File file = new ClassPathResource(FILE_PATH).getFile();
+        File file = new File(FILE_PATH);
         MappingIterator<CurrencyRecord> iterator = mapper
                 .readerFor(CurrencyRecord.class)
                 .with(bootstrapSchema)

@@ -7,7 +7,6 @@ import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.server.ResponseStatusException;
@@ -30,12 +29,8 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
 
     private final String directoryPath;
 
-    private final String folder;
-
-    public CurrencyRepositoryImpl(@Value("${dir.path}") final String directoryPath,
-                                  @Value("${prices.folder}") final String folder) {
+    public CurrencyRepositoryImpl(@Value("${dir.path}") final String directoryPath) {
         this.directoryPath = directoryPath;
-        this.folder = folder;
     }
 
     /**
@@ -47,7 +42,7 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
         Map<String, String> allSupportedCurrencies = new HashMap<>();
         File[] allFiles = getAllFiles();
         for (File file : allFiles) {
-            String filePath = this.folder + file.getName();
+            String filePath = this.directoryPath + file.getName();
             String currency = file.getName().split(REGEX)[0];
             allSupportedCurrencies.put(currency, filePath);
         }
@@ -64,7 +59,7 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
         try {
             CsvSchema bootstrapSchema = CsvSchema.emptySchema().withHeader();
             CsvMapper mapper = new CsvMapper();
-            File file = new ClassPathResource(filePath).getFile();
+            File file = new File(filePath);
             MappingIterator<CurrencyRecord> readValues =
                     mapper.readerFor(CurrencyRecord.class).with(bootstrapSchema).readValues(file);
             return readValues.readAll();
