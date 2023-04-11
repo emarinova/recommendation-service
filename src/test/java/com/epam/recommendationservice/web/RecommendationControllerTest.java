@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class RecommendationControllerTest {
 
-    public static final String BLANK_VALUE = "";
+    private static final String BLANK_VALUE = "";
 
     @Mock
     private CurrencyService service;

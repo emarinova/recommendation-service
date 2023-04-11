@@ -26,7 +26,7 @@ import static org.junit.Assert.assertEquals;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class CurrencyRepositoryImplTest {
 
-    public static final String FILE_PATH = "prices/BTC_values.csv";
+    private static final String FILE_PATH = "prices/BTC_values.csv";
 
     private CurrencyRepository repository;
 
