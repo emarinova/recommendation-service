@@ -13,16 +13,16 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class RateLimitService {
 
-    private final long capacity;
+    private final int capacity;
 
-    private final long minutes;
+    private final int minutes;
 
     private final Map<String, Bucket> cache;
 
-    public RateLimitService(@Value("${rate.limit.capacity}") final String capacity,
-                            @Value("${rate.limit.duration.minutes}") final String minutes) {
-        this.capacity = Long.parseLong(capacity);
-        this.minutes = Long.parseLong(minutes);
+    public RateLimitService(@Value("${rate.limit.capacity}") final int capacity,
+                            @Value("${rate.limit.duration.minutes}") final int minutes) {
+        this.capacity = capacity;
+        this.minutes = minutes;
         this.cache = new ConcurrentHashMap<>();
     }
 
