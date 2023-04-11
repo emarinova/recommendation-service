@@ -8,6 +8,4 @@ Follow these steps to try it out:
 2. Run RecommendationServiceApplication
 3. Open http://localhost:8080/swagger-ui.html
 
-You can also use this image and run in container: emarinova/recommendation-service:latest
-
 Enjoy!
